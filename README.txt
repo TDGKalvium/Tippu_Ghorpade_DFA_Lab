@@ -26,3 +26,4 @@ L = { w in {0,1}* | w ends with 01 }
 The browser frontend is a learning simulator. All assets and code are included locally.
 
 The Demo Link https://clever-brigadeiros-9dc114.netlify.app/
+GitHub Link https://github.com/TDGKalvium/Tippu_Ghorpade_DFA_Lab
