@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>DFA Lab | Binary Pattern Recognizer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="DFA Lab home">
+      <span class="brand-mark">δ</span>
+      <span><b>DFA<span class="brand-accent">LAB</span></b><small>FORMAL LANGUAGE & AUTOMATA THEORY</small></span>
+    </a>
+    <div class="topbar-right">
+      <span class="status-dot"></span><span class="status-text">SIMULATOR READY</span>
+      <span class="topbar-divider"></span><span class="course-tag">MICRO PROJECT</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="hero">
+      <div class="eyebrow"><span class="eyebrow-line"></span> FINITE AUTOMATA PLAYGROUND</div>
+      <h1>See how a machine<br /><span>thinks in states.</span></h1>
+      <p class="hero-copy">Explore a Deterministic Finite Automaton that recognizes binary strings ending in <code>01</code>. Enter a string, step through each transition, and watch the machine decide.</p>
+      <div class="hero-pills"><span>● Deterministic</span><span>Σ = {0, 1}</span><span>Accepting state: q2</span></div>
+    </section>
+
+    <section class="workspace">
+      <div class="panel input-panel">
+        <div class="panel-heading">
+          <div><span class="section-kicker">01 / INPUT</span><h2>Test a string</h2></div>
+          <span class="mini-icon">⌘</span>
+        </div>
+        <label for="binaryInput">BINARY INPUT STRING</label>
+        <div class="input-wrap">
+          <span class="input-prefix">01</span>
+          <input id="binaryInput" type="text" autocomplete="off" spellcheck="false" maxlength="80" placeholder="e.g. 1101" aria-describedby="inputHelp" />
+          <button id="clearBtn" class="clear-btn" type="button" aria-label="Clear input">×</button>
+        </div>
+        <div id="inputHelp" class="input-help">Use only <b>0</b> and <b>1</b>. The string must end with <code>01</code>.</div>
+        <div class="quick-label">TRY AN EXAMPLE</div>
+        <div class="examples">
+          <button class="example-chip" data-value="101">101 <span>✓</span></button>
+          <button class="example-chip" data-value="1101">1101 <span>✓</span></button>
+          <button class="example-chip" data-value="100">100 <span>×</span></button>
+          <button class="example-chip" data-value="111">111 <span>×</span></button>
+        </div>
+        <button id="runBtn" class="primary-btn" type="button"><span>Run DFA simulation</span><span class="btn-arrow">↗</span></button>
+        <div class="keyboard-hint">Press <kbd>Enter</kbd> to run the simulation</div>
+      </div>
+
+      <div class="panel result-panel">
+        <div class="panel-heading">
+          <div><span class="section-kicker">02 / DECISION</span><h2>Machine output</h2></div>
+          <span class="live-badge"><span></span> LIVE</span>
+        </div>
+        <div id="resultCard" class="result-card idle">
+          <div id="resultIcon" class="result-icon">◎</div>
+          <div><div id="resultTitle" class="result-title">Awaiting input</div><p id="resultMessage">Run a string to see whether it belongs to the language.</p></div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><span>INPUT LENGTH</span><b id="lengthMetric">—</b></div>
+          <div class="metric"><span>SYMBOLS READ</span><b id="readMetric">—</b></div>
+          <div class="metric"><span>FINAL STATE</span><b id="stateMetric">—</b></div>
+        </div>
+        <div class="verdict-row"><span>LANGUAGE</span><code>L = { w ∈ {0,1}* | w ends with 01 }</code></div>
+      </div>
+    </section>
+
+    <section class="panel automaton-panel">
+      <div class="panel-heading automaton-heading">
+        <div><span class="section-kicker">03 / AUTOMATON</span><h2>State transition map</h2><p class="panel-subtitle">Follow the path as each bit is processed.</p></div>
+        <div class="legend"><span><i class="legend-start"></i> Start state</span><span><i class="legend-accept"></i> Accepting state</span></div>
+      </div>
+      <div class="diagram-scroll">
+        <svg id="dfaSvg" viewBox="0 0 820 270" role="img" aria-label="DFA state diagram with q0, q1 and q2">
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7e8aa8"/></marker>
+            <marker id="activeArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#63e6be"/></marker>
+          </defs>
+          <path class="edge" data-edge="start" d="M18 132 L77 132" marker-end="url(#arrow)"/>
+          <path class="edge" data-edge="q0-0" d="M120 102 C90 43 184 43 157 102" marker-end="url(#arrow)"/>
+          <text class="edge-label" x="138" y="48">1</text>
+          <path class="edge" data-edge="q0-1" d="M177 132 L336 132" marker-end="url(#arrow)"/>
+          <text class="edge-label" x="255" y="119">0</text>
+          <path class="edge" data-edge="q1-0" d="M376 102 C345 43 439 43 412 102" marker-end="url(#arrow)"/>
+          <text class="edge-label" x="394" y="48">0</text>
+          <path class="edge" data-edge="q1-1" d="M433 132 L592 132" marker-end="url(#arrow)"/>
+          <text class="edge-label" x="511" y="119">1</text>
+          <path class="edge" data-edge="q2-0" d="M631 162 C600 226 696 226 669 162" marker-end="url(#arrow)"/>
+          <text class="edge-label" x="650" y="232">0</text>
+          <path class="edge" data-edge="q2-1" d="M667 102 C713 28 777 68 744 111" marker-end="url(#arrow)"/>
+          <text class="edge-label" x="733" y="55">1</text>
+          <path class="edge" data-edge="q1back" d="M336 157 C280 220 194 220 177 157" marker-end="url(#arrow)"/>
+          <text class="edge-label" x="255" y="218">0</text>
+          <circle class="state" data-state="q0" cx="138" cy="132" r="39"/>
+          <circle class="state" data-state="q1" cx="394" cy="132" r="39"/>
+          <circle class="state accepting" data-state="q2" cx="650" cy="132" r="39"/>
+          <circle class="accept-ring" cx="650" cy="132" r="32"/>
+          <text class="state-name" x="138" y="128">q0</text><text class="state-note" x="138" y="145">START</text>
+          <text class="state-name" x="394" y="128">q1</text><text class="state-note" x="394" y="145">SEEN 0</text>
+          <text class="state-name" x="650" y="128">q2</text><text class="state-note" x="650" y="145">ACCEPT</text>
+        </svg>
+      </div>
+      <div class="diagram-caption"><span class="caption-dot"></span> A highlighted state shows the machine's current position after simulation.</div>
+    </section>
+
+    <section class="lower-grid">
+      <div class="panel trace-panel">
+        <div class="panel-heading"><div><span class="section-kicker">04 / EXECUTION</span><h2>Transition trace</h2></div><button id="stepBtn" class="secondary-btn" type="button" disabled>Next step →</button></div>
+        <div id="traceEmpty" class="empty-state"><span class="empty-symbol">↳</span><p>Your state-by-state trace will appear here.</p></div>
+        <div id="traceArea" class="trace-area hidden"></div>
+        <div class="trace-footer"><button id="resetBtn" class="text-btn" type="button" disabled>↺ Reset simulation</button><span id="stepCounter">No simulation yet</span></div>
+      </div>
+      <div class="panel theory-panel">
+        <div class="panel-heading"><div><span class="section-kicker">05 / THEORY</span><h2>Transition rules</h2></div></div>
+        <table class="transition-table">
+          <thead><tr><th>STATE</th><th>INPUT 0</th><th>INPUT 1</th></tr></thead>
+          <tbody>
+            <tr><td><span class="state-dot">→</span> q0</td><td>q1</td><td>q0</td></tr>
+            <tr><td>q1</td><td>q1</td><td>q2</td></tr>
+            <tr><td><span class="accept-dot">★</span> q2</td><td>q1</td><td>q0</td></tr>
+          </tbody>
+        </table>
+        <div class="rule-note"><span>i</span><p><b>Why q2 accepts:</b> the machine finishes in q2 exactly when the last two symbols are <code>01</code>.</p></div>
+      </div>
+    </section>
+
+    <section class="concept-strip">
+      <div><span class="concept-number">01</span><b>Deterministic</b><p>One next state for every state and input symbol.</p></div>
+      <div><span class="concept-number">02</span><b>Finite memory</b><p>Only three states are needed to track the pattern.</p></div>
+      <div><span class="concept-number">03</span><b>Linear runtime</b><p>Each input bit is processed once: O(n) time.</p></div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-brand"><span class="brand-mark small">δ</span><span><b>DFA LAB</b><small>FORMAL LANGUAGE & AUTOMATA THEORY</small></span></div>
+      <div class="footer-student">Micro Project · Tippu Ghorpade · Squad 71</div>
+      <div class="footer-course">ALLIANCE UNIVERSITY</div>
+    </footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
